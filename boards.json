@@ -1,0 +1,17 @@
+{
+    "header": {
+        "show": true
+    },
+    "menu": {
+        "boards": [
+            { "fullName": "gitsense-docs.app", "default": true }
+        ]
+    },
+    "quickLinks": {
+        "boards": [
+            {
+                "fullName": "gitsense-docs.app"
+            }
+        ]
+    }
+}
