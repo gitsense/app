@@ -4,13 +4,26 @@
     },
     "menu": {
         "boards": [
-            { "fullName": "gitsense-docs.app", "default": true }
+            { "fullName": "gitsense-docs.app", "default": true },
+            { "fullName": "gitsense-issues.app" },
+            { "fullName": "gitsense-pull-requests.app" },
+            { "fullName": "gitsense-insights.app" }
         ]
     },
     "quickLinks": {
         "boards": [
             {
-                "fullName": "gitsense-docs.app"
+                "fullName": "gitsense-docs.app",
+                "default": true
+            },
+            {
+                "fullName": "gitsense-issues.app"
+            },
+            {
+                "fullName": "gitsense-pull-requests.app"
+            },
+            {
+                "fullName": "gitsense-insights.app"
             }
         ]
     }

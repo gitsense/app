@@ -1,8 +1,14 @@
 #!/bin/bash
 
-if [ $# -lt 1 ]; then
-    echo "usage: run <port>";
+if [ $# -gt 1 ]; then
+    echo "usage: run [port]";
     exit 1;
+fi
+
+if [ -z "${1}" ]; then
+    port=3357;
+else
+    port=$1;
 fi
 
 set -x;
@@ -13,5 +19,5 @@ docker run \
     --name gitsense-app \
     --volume gitsense-app-opt:/opt \
     --volume gitsense-app-home:/home/gitsense \
-    --publish ${1}:3357 \
+    --publish ${port}:3357 \
     gitsense-app

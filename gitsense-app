@@ -1,0 +1,31 @@
+#!/bin/bash
+
+usage() {
+    echo "usage: ${0} <start|stop|restart>";
+}
+
+if [ $# -ne 1 ]; then
+    usage;
+    exit 1;
+fi
+
+cmd=${1};
+
+if [[ "$cmd" != "start" && "$cmd" != "stop" && "$cmd" != "restart" ]]; then
+    usage;
+    exit 1;
+fi
+
+if [[ "$USER" == "" || "$USER" == "root" ]]; then
+    sudo -u gitsense $0 $@;
+    exit;
+elif [[ "$USER" != "gitsense" ]]; then
+    echo "ERROR: Only root and gitsense can execute this script";
+    exit 1;
+fi
+
+export NVM_DIR="$HOME/.nvm";
+source "$NVM_DIR/nvm.sh";
+
+cd /opt/gitsense-app/packages/gitsense-docs/widgets/app && forever $cmd manager.js;
+cd /opt/gitsense-app && forever $cmd server.js;

@@ -13,8 +13,11 @@ RUN cd /tmp && \
 RUN adduser gitsense
 
 # Grab packages from GitHub
-RUN cd /opt && git clone --branch beta-1.0.0 https://github.com/gitsense/devboard.git gitsense-app 
-RUN cd /opt/gitsense-app/packages && git clone --branch beta-1.0.2 https://github.com/gitsense/docs.git gitsense-docs
+RUN cd /opt && git clone --branch beta-1.0.3 https://github.com/gitsense/devboard.git gitsense-app 
+RUN cd /opt/gitsense-app/packages && git clone --branch beta-1.0.3 https://github.com/gitsense/docs.git gitsense-docs
+RUN cd /opt/gitsense-app/packages && git clone --branch temp-1.0.1 https://github.com/gitsense/insights.git gitsense-insights
+RUN cd /opt/gitsense-app/packages && git clone --branch temp-1.0.1 https://github.com/gitsense/issues.git gitsense-issues
+RUN cd /opt/gitsense-app/packages && git clone --branch temp-1.0.0 https://github.com/gitsense/pull-requests.git gitsense-pull-requests
 
 # See https://devboard.gitsense.com/?board=welcome.boards to learn more about the boards.json file
 COPY boards.json /opt/gitsense-app
@@ -43,11 +46,11 @@ RUN export NVM_DIR="$HOME/.nvm" && \
     npm run build:boards && \
     npm run bundle
 
-# Make sure to run this as the gitsense user
+# Install duckdb sqlite exention. ONLY run this as the gitsense user
 RUN duckdb -c 'INSTALL SQLITE; LOAD SQLITE;'
 
-# Install start-app which will start necessary processes and keep the container up and running indefinitely
+# Install container scripts as root
 USER root
-COPY start.sh start-processes.sh /usr/bin
-RUN chmod 755 /usr/bin/start.sh /usr/bin/start-processes.sh
-ENTRYPOINT ["start.sh"]
+COPY entry gitsense-app /usr/bin
+RUN chmod 755 /usr/bin/entry /usr/bin/gitsense-app
+ENTRYPOINT ["entry"]

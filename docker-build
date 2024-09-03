@@ -1,0 +1,1 @@
+docker build -t gitsense-app --progress=plain .
