@@ -4,11 +4,6 @@ FROM rockylinux:9-minimal
 RUN microdnf -y update && microdnf clean all 
 RUN microdnf -y install vim wget tar unzip findutils git procps sudo
 
-# Install the DuckDB binary which is required by GitSense Docs
-RUN cd /tmp && \
-    wget https://github.com/duckdb/duckdb/releases/download/v1.0.0/duckdb_cli-linux-amd64.zip && \
-    unzip duckdb_cli-linux-amd64.zip -d /usr/bin
-
 # Create the gitsense user
 RUN adduser gitsense
 
@@ -45,9 +40,6 @@ RUN export NVM_DIR="$HOME/.nvm" && \
     npm run build:widgets && \
     npm run build:boards && \
     npm run bundle
-
-# Install duckdb sqlite exention. ONLY run this as the gitsense user
-RUN duckdb -c 'INSTALL SQLITE; LOAD SQLITE;'
 
 # Install container scripts as root
 USER root

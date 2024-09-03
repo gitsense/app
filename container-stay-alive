@@ -1,8 +1,0 @@
-#!/bin/bash
-
-sudo -u gitsense container-start-app
-
-while true
-do
-    sleep 1;
-done
