@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo -u gitsense gitsense-app start
+sudo -u gitsense gsapp start
 
 while true
 do

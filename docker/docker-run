@@ -20,4 +20,4 @@ docker run \
     --volume gitsense-app-opt:/opt \
     --volume gitsense-app-home:/home/gitsense \
     --publish ${port}:3357 \
-    gitsense-app
+    gitsense/app

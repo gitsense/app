@@ -1,0 +1,7 @@
+#!/bin/bash
+
+gh_token=`cat .gh-token`;
+tmpfile="Dockerfile-mapped";
+
+cat Dockerfile | sed "s/{{GH_TOKEN}}/$gh_token/" > ${tmpfile}
+docker build -f ${tmpfile} -t gitsense/app --progress=plain --no-cache . && rm ${tmpfile}

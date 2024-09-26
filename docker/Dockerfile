@@ -8,11 +8,14 @@ RUN microdnf -y install vim wget tar unzip findutils git procps sudo
 RUN adduser gitsense
 
 # Grab packages from GitHub
-RUN cd /opt && git clone --branch beta-1.0.3 https://github.com/gitsense/devboard.git gitsense-app 
-RUN cd /opt/gitsense-app/packages && git clone --branch beta-1.0.3 https://github.com/gitsense/docs.git gitsense-docs
-RUN cd /opt/gitsense-app/packages && git clone --branch temp-1.0.1 https://github.com/gitsense/insights.git gitsense-insights
-RUN cd /opt/gitsense-app/packages && git clone --branch temp-1.0.1 https://github.com/gitsense/issues.git gitsense-issues
-RUN cd /opt/gitsense-app/packages && git clone --branch temp-1.0.0 https://github.com/gitsense/pull-requests.git gitsense-pull-requests
+RUN cd /opt && git clone --branch beta-1.0.0 https://github.com/gitsense/devboard.git gitsense-app 
+RUN cd /opt/gitsense-app/packages && git clone --branch alpha-1.0.0 https://gitsense:{{GH_TOKEN}}@github.com/gitsense/docs.git gitsense-docs
+RUN cd /opt/gitsense-app/packages && git clone --branch msg-0.0.0 https://github.com/gitsense/issues.git gitsense-issues
+RUN cd /opt/gitsense-app/packages && git clone --branch msg-0.0.0 https://github.com/gitsense/insights.git gitsense-insights
+RUN cd /opt/gitsense-app/packages && git clone --branch msg-0.0.0 https://github.com/gitsense/pull-requests.git gitsense-pull-requests
+
+# Simple symlinks
+RUN cd /opt && ln -s gitsense-app/packages/gitsense-docs/widgets/app/ docs
 
 # See https://devboard.gitsense.com/?board=welcome.boards to learn more about the boards.json file
 COPY boards.json /opt/gitsense-app
@@ -43,6 +46,6 @@ RUN export NVM_DIR="$HOME/.nvm" && \
 
 # Install container scripts as root
 USER root
-COPY entry gitsense-app /usr/bin
-RUN chmod 755 /usr/bin/entry /usr/bin/gitsense-app
+COPY entry gsapp /usr/bin
+RUN chmod 755 /usr/bin/entry /usr/bin/gsapp
 ENTRYPOINT ["entry"]
