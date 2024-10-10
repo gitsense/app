@@ -1,3 +1,5 @@
 .env
 .gh-token
+gitsense-app
+gitsense-app-tmp
 Dockerfile-mapped

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+app_dir=~/.gitsense-app
+app_server=gs-apps-server
+docs_manager=gs-apps-docs-manager
+
+# The order that processes are started is important
+cd $app_dir/packages/gitsense-docs/widgets/app && 
+    forever -a --uid $docs_manager --max-log-size 5m --min-logs 3 start manager.js
+
+sleep 1;
+
+cd $app_dir && \
+    forever -a --uid $app_server --max-log-size 5m --min-logs 3 start server.js

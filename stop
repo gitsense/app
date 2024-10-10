@@ -1,0 +1,8 @@
+#!/bin/bash
+
+app_dir=~/.gitsense-app
+app_server=gs-apps-server
+docs_manager=gs-apps-docs-manager
+
+cd $app_dir/packages/gitsense-docs/widgets/app && forever stop $docs_manager &&
+cd $app_dir && forever stop $app_server

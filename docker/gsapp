@@ -1,15 +1,23 @@
 #!/bin/bash
 
+app_dir=/opt/gitsense-app
+app_server=gs-apps-server
+docs_manager=gs-apps-docs-manager
+
 usage() {
-    echo "usage: ${0} <start|stop|restart>";
+    echo "usage: ${0} <start|stop|restart> [app-dir]";
 }
 
-if [ $# -ne 1 ]; then
+if [ $# -gt 2 ]; then
     usage;
     exit 1;
 fi
 
 cmd=${1};
+
+if [ "$2" ]; then
+    app_dir=$2; 
+fi
 
 if [[ "$cmd" != "start" && "$cmd" != "stop" && "$cmd" != "restart" ]]; then
     usage;
@@ -27,5 +35,8 @@ fi
 export NVM_DIR="$HOME/.nvm";
 source "$NVM_DIR/nvm.sh";
 
-cd /opt/gitsense-app/packages/gitsense-docs/widgets/app && forever $cmd manager.js;
-cd /opt/gitsense-app && forever $cmd server.js;
+# The order that processes are started is important
+cd $app_dir/packages/gitsense-docs/widgets/app && 
+    forever -a --uid $docs_manager --max-log-size 5m --min-logs 3 $cmd manager.js && \
+cd $app_dir && \
+    forever -a --uid $app_server --max-log-size 5m --min-logs 3 $cmd server.js

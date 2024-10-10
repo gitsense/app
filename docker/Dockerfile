@@ -8,8 +8,8 @@ RUN microdnf -y install vim wget tar unzip findutils git procps sudo
 RUN adduser gitsense
 
 # Grab packages from GitHub
-RUN cd /opt && git clone --branch beta-1.0.0 https://github.com/gitsense/devboard.git gitsense-app 
-RUN cd /opt/gitsense-app/packages && git clone --branch alpha-1.0.0 https://gitsense:{{GH_TOKEN}}@github.com/gitsense/docs.git gitsense-docs
+RUN cd /opt && git clone --branch beta-1.2.0 https://github.com/gitsense/devboard.git gitsense-app 
+RUN cd /opt/gitsense-app/packages && git clone --branch alpha-1.1.1 https://gitsense:{{GH_TOKEN}}@github.com/gitsense/docs.git gitsense-docs
 RUN cd /opt/gitsense-app/packages && git clone --branch msg-0.0.0 https://github.com/gitsense/issues.git gitsense-issues
 RUN cd /opt/gitsense-app/packages && git clone --branch msg-0.0.0 https://github.com/gitsense/insights.git gitsense-insights
 RUN cd /opt/gitsense-app/packages && git clone --branch msg-0.0.0 https://github.com/gitsense/pull-requests.git gitsense-pull-requests
